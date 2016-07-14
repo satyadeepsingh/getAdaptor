@@ -1,4 +1,5 @@
 org\infozech\netty\GetFilePath.class
 org\infozech\netty\NettyDispatcher.class
 org\infozech\netty\NettyServerHandler.class
+org\infozech\netty\logger\CustomAppender.class
 org\infozech\netty\NettyDispatcher$1.class

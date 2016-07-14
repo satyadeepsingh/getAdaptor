@@ -31,18 +31,15 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 				for (int i = 0; i < in.capacity(); i ++) {
 				      b[i] = in.getByte(i);
 				      System.out.printf(String.format("%02x", b[i]));
-				      logger.info(b[i]);
-				 }
+			 }
 				
 			     
 		//		 ByteBuf in = (ByteBuf) msg;
 		//	        System.out.println(
 		//	            "Server received: " + in.toString(CharsetUtil.UTF_8));
 			        ctx.write(in);
-			        
-			       // ctx.close();
-	
-	
+			        ctx.close();
+		
 	}
 
 	@Override
