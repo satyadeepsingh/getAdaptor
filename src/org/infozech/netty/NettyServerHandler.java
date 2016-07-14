@@ -2,6 +2,8 @@ package org.infozech.netty;
 
 
 
+import java.util.Date;
+
 import org.apache.log4j.Logger;
 import org.springframework.jms.annotation.EnableJms;
 import org.springframework.stereotype.Service;
@@ -27,7 +29,9 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 	
 				ByteBuf in = Unpooled.copiedBuffer((ByteBuf) msg);
-				Byte[] b =new Byte[in.capacity()];		
+				Byte[] b =new Byte[in.capacity()];
+				Date date = new Date();
+			//	logger.info("[ "+ " Receiving from the server: " +date + NettyDispatcher.address +" ]");
 				for (int i = 0; i < in.capacity(); i ++) {
 				      b[i] = in.getByte(i);
 				      System.out.printf(String.format("%02x", b[i]));
@@ -38,7 +42,7 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 		//	        System.out.println(
 		//	            "Server received: " + in.toString(CharsetUtil.UTF_8));
 			        ctx.write(in);
-			        ctx.close();
+			        //ctx.close();
 		
 	}
 

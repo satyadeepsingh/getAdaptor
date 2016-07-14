@@ -67,9 +67,8 @@ public class NettyDispatcher {
 	
 	@Autowired
 	NettyServerHandler nettyserverhandler;
-	
 	private static final Logger logger = Logger.getLogger(NettyDispatcher.class);
-	
+	public static InetSocketAddress address = null;
 	@RequestMapping(value="/", method=RequestMethod.GET)
 	public String netty(Model model){
 		System.out.println("Home Controller..... Passing through");
@@ -79,7 +78,7 @@ public class NettyDispatcher {
 		return "hello";
 	}
 	
-	InetSocketAddress address = null;
+	
 	@RequestMapping("/nettystart")
 	public String nettystart(Model model){
 		
@@ -96,7 +95,7 @@ public class NettyDispatcher {
 			 .channel(NioServerSocketChannel.class)
 			 .option(ChannelOption.ALLOCATOR, PooledByteBufAllocator.DEFAULT)
 			 .option(ChannelOption.TCP_NODELAY, true)
-			// .handler(new LoggingHandler(LogLevel.INFO))
+			 .handler(new LoggingHandler(LogLevel.INFO))
 			 
 			 .childHandler(new ChannelInitializer<SocketChannel>() {
 
@@ -105,7 +104,7 @@ public class NettyDispatcher {
 					// TODO Auto-generated method stub
 					ChannelPipeline p = ch.pipeline();
 					System.out.println("New Client connected:" + ch.localAddress());
-				    logger.info("Receiving data from" + ch.localAddress());
+				    address = ch.localAddress();
 				    
 					p.addLast(nettyserverhandler);
 				}
