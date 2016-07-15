@@ -2,21 +2,34 @@ package org.infozech.netty;
 
 
 
-import javax.servlet.jsp.jstl.core.Config;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
-import org.apache.logging.log4j.core.config.AbstractConfiguration;
-import org.apache.logging.log4j.spi.LoggerContext;
+import org.apache.log4j.Logger;
+import org.infozech.dao.BytesDao;
+import org.infozech.dao.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
-import io.netty.channel.ChannelHandler.Sharable;
 
 @Sharable
 @Service
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
+	
+	
+	@Autowired
+	BytesDao bytesdao;
+	
+	@Autowired
+	Test test;
+	
+	private static final Logger logger = Logger.getLogger(NettyServerHandler.class);
 	
 	@Override
 	public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -27,22 +40,28 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 	
 				ByteBuf in = Unpooled.copiedBuffer((ByteBuf) msg);
-				Byte[] b =new Byte[in.capacity()];		
+								
+				byte[] b = new byte[in.capacity()];
+				
+				List<Byte> bytelist = new ArrayList<Byte>();
+				
 				for (int i = 0; i < in.capacity(); i ++) {
 				      b[i] = in.getByte(i);
 				      System.out.printf(String.format("%02x", b[i]));
 				      logger.info(b[i]);
+				      bytelist.add(b[i]);
 				 }
 				
-			     
-		//		 ByteBuf in = (ByteBuf) msg;
-		//	        System.out.println(
-		//	            "Server received: " + in.toString(CharsetUtil.UTF_8));
-			        ctx.write(in);
-			        
-			       // ctx.close();
-	
-	
+				 bytesdao.setBytelist(bytelist);
+				 /*
+				 List<Byte> newbytelist = bytesdao.getBytelist();
+				 for(byte bytes:newbytelist){
+					 System.out.println(String.format("%02x", bytes));
+				 }*/
+				 test.get();
+		         ctx.write(in);
+		         ctx.close();
+		
 	}
 
 	@Override

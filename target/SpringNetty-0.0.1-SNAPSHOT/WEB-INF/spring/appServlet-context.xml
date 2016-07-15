@@ -16,7 +16,7 @@
 	
 	<!-- Scans within the base package of the application for @Components to configure as beans -->
 	<!-- @Controller, @Service, @Configuration, etc. -->
-	<context:component-scan base-package="org.infozech.netty" />
+	<context:component-scan base-package="org.infozech" />
 	
 	<context:property-placeholder location="classpath:ports.properties"/>
 	<!-- Enables the Spring MVC @Controller programming model -->
