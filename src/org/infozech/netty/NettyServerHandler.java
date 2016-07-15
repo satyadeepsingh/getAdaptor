@@ -3,7 +3,7 @@ package org.infozech.netty;
 
 
 import java.util.ArrayList;
-import java.util.Iterator;
+
 import java.util.List;
 
 import org.apache.log4j.Logger;
@@ -18,6 +18,10 @@ import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 
+/**
+ * @author satyadeep
+ *
+ */
 @Sharable
 @Service
 public class NettyServerHandler extends ChannelInboundHandlerAdapter {
@@ -36,6 +40,10 @@ public class NettyServerHandler extends ChannelInboundHandlerAdapter {
 			
 		};
 		
+	/* (non-Javadoc)
+	 * @see io.netty.channel.ChannelInboundHandlerAdapter#channelRead(io.netty.channel.ChannelHandlerContext, java.lang.Object)
+	 */
+	
 	@Override
 	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
 	

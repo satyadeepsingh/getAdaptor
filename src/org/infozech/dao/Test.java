@@ -13,12 +13,12 @@ public class Test {
 	BytesDao bytesdao;
 	  
 	public void get(){
-		//System.out.println("Printing values...");
+		System.out.println("Printing values...");
 		
 		List<Byte> byteslist = bytesdao.getBytelist();
 		
 		for(byte b: byteslist){
-			System.out.printf("Value is... "+ String.format("%02X", b));
+			System.out.printf(String.format("%02X", b));
 		}
 	}
 }    
